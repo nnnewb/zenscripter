@@ -25,6 +25,11 @@ const bz2_include_dir = bz2_root;
 const bz2_library_dir = bz2_root;
 const bz2_binary_dir = "vendor/bzip2-dll-1.0.8.0-win-x64/";
 
+const iconv_root = "vendor/libiconv-for-Windows_prebuilt/";
+const iconv_include_dir = iconv_root;
+const iconv_library_dir = iconv_root ++ "x64/Release/";
+const iconv_binary_dir = iconv_root ++ "x64/Release/";
+
 pub fn build(b: *std.Build) void {
     const decode_sources = &[_][]const u8{
         "src/DirectReader.cpp",
@@ -101,12 +106,14 @@ pub fn build(b: *std.Build) void {
     exe.addIncludePath(b.path(sdl2_ttf_include_dir));
     exe.addIncludePath(b.path(sdl2_mixer_include_dir));
     exe.addIncludePath(b.path(bz2_include_dir));
+    exe.addIncludePath(b.path(iconv_include_dir));
 
     exe.addLibraryPath(b.path(sdl2_library_dir));
     exe.addLibraryPath(b.path(sdl2_image_library_dir));
     exe.addLibraryPath(b.path(sdl2_ttf_library_dir));
     exe.addLibraryPath(b.path(sdl2_mixer_library_dir));
     exe.addLibraryPath(b.path(bz2_library_dir));
+    exe.addLibraryPath(b.path(iconv_library_dir));
 
     exe.linkSystemLibrary("SDL2.dll");
     exe.linkSystemLibrary("SDL2main");
@@ -114,11 +121,13 @@ pub fn build(b: *std.Build) void {
     exe.linkSystemLibrary("SDL2_ttf.dll");
     exe.linkSystemLibrary("SDL2_mixer.dll");
     exe.linkSystemLibrary("libbz2");
+    exe.linkSystemLibrary("libiconv");
 
     b.installBinFile(sdl2_binary_dir ++ "SDL2.dll", "SDL2.dll");
     b.installBinFile(sdl2_image_binary_dir ++ "SDL2_image.dll", "SDL2_image.dll");
     b.installBinFile(sdl2_ttf_binary_dir ++ "SDL2_ttf.dll", "SDL2_ttf.dll");
     b.installBinFile(sdl2_mixer_binary_dir ++ "SDL2_mixer.dll", "SDL2_mixer.dll");
     b.installBinFile(bz2_binary_dir ++ "libbz2.dll", "libbz2.dll");
+    b.installBinFile(iconv_binary_dir ++ "libiconv.dll", "libiconv.dll");
     b.installArtifact(exe);
 }
