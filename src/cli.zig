@@ -85,8 +85,8 @@ fn parseCommandLineOptionsInner(comptime T: type, iter: *ArgIterator(T)) !Comman
             _ = try stdout.write("      --render-font-outline\trender the outline of a text instead of casting a shadow\n");
             _ = try stdout.write("      --edit\t\tenable online modification of the volume and variables when 'z' is pressed\n");
             _ = try stdout.write("      --key-exe file\tset a file (*.EXE) that includes a key table\n");
-            _ = try stdout.write("      --enc:sjis\tuse sjis coding script\n");
-            _ = try stdout.write("      --debug:1\t\tprint debug info\n");
+            // _ = try stdout.write("      --enc:sjis\tuse sjis coding script\n");
+            // _ = try stdout.write("      --debug:1\t\tprint debug info\n");
             _ = try stdout.write("      --fontcache\tcache default font\n");
             _ = try stdout.write("  -SW, -HW\t\tuse software or hardware renderer (software renderer is used by default)\n");
             _ = try stdout.write("  -W,-H\t\toverride window size provided by nscript manually\n");
@@ -276,4 +276,29 @@ test "-W option" {
 
     const options = try parseCommandLineOptionsInner(MockArgIterator, &it);
     try std.testing.expectEqual(@as(u32, 1920), options.width);
+}
+
+test "--fontcache option" {
+    var mock_args = [_][:0]const u8{
+        "zenscripter",
+        "--fontcache",
+    };
+    var mock_it = MockArgIterator.init(&mock_args);
+    var it = mock_it.arg_iterator();
+
+    const options = try parseCommandLineOptionsInner(MockArgIterator, &it);
+    try std.testing.expectEqual(true, options.font_cache);
+}
+
+test "--key-exe option" {
+    var mock_args = [_][:0]const u8{
+        "zenscripter",
+        "--key-exe",
+        "keyfile.exe",
+    };
+    var mock_it = MockArgIterator.init(&mock_args);
+    var it = mock_it.arg_iterator();
+
+    const options = try parseCommandLineOptionsInner(MockArgIterator, &it);
+    try std.testing.expectEqualStrings("keyfile.exe", options.key_exe.?);
 }
