@@ -362,3 +362,104 @@ test "--force-button-shortcut option" {
     const options = try parseCommandLineOptionsInner(MockArgIterator, &it);
     try std.testing.expectEqual(true, options.force_button_shortcut);
 }
+
+test "--window option" {
+    var mock_args = [_][:0]const u8{
+        "zenscripter",
+        "--window",
+    };
+    var mock_it = MockArgIterator.init(&mock_args);
+    var it = mock_it.arg_iterator();
+
+    const options = try parseCommandLineOptionsInner(MockArgIterator, &it);
+    try std.testing.expectEqual(true, options.window);
+}
+
+test "--fullscreen option" {
+    var mock_args = [_][:0]const u8{
+        "zenscripter",
+        "--fullscreen",
+    };
+    var mock_it = MockArgIterator.init(&mock_args);
+    var it = mock_it.arg_iterator();
+
+    const options = try parseCommandLineOptionsInner(MockArgIterator, &it);
+    try std.testing.expectEqual(true, options.fullscreen);
+}
+
+test "-r/--root option" {
+    var mock_args = [_][:0]const u8{
+        "zenscripter",
+        "-r",
+        "root/path",
+    };
+    var mock_it = MockArgIterator.init(&mock_args);
+    var it = mock_it.arg_iterator();
+
+    const options = try parseCommandLineOptionsInner(MockArgIterator, &it);
+    try std.testing.expectEqualStrings("root/path", options.root.?);
+}
+
+test "--dll option" {
+    var mock_args = [_][:0]const u8{
+        "zenscripter",
+        "--dll",
+        "library.dll",
+    };
+    var mock_it = MockArgIterator.init(&mock_args);
+    var it = mock_it.arg_iterator();
+
+    const options = try parseCommandLineOptionsInner(MockArgIterator, &it);
+    try std.testing.expectEqualStrings("library.dll", options.dll.?);
+}
+
+test "--registry option" {
+    var mock_args = [_][:0]const u8{
+        "zenscripter",
+        "--registry",
+        "registry.reg",
+    };
+    var mock_it = MockArgIterator.init(&mock_args);
+    var it = mock_it.arg_iterator();
+
+    const options = try parseCommandLineOptionsInner(MockArgIterator, &it);
+    try std.testing.expectEqualStrings("registry.reg", options.registry.?);
+}
+
+test "-f/--font option" {
+    var mock_args = [_][:0]const u8{
+        "zenscripter",
+        "-f",
+        "font.ttf",
+    };
+    var mock_it = MockArgIterator.init(&mock_args);
+    var it = mock_it.arg_iterator();
+
+    const options = try parseCommandLineOptionsInner(MockArgIterator, &it);
+    try std.testing.expectEqualStrings("font.ttf", options.font.?);
+}
+
+test "--cdnumber option" {
+    var mock_args = [_][:0]const u8{
+        "zenscripter",
+        "--cdnumber",
+        "1",
+    };
+    var mock_it = MockArgIterator.init(&mock_args);
+    var it = mock_it.arg_iterator();
+
+    const options = try parseCommandLineOptionsInner(MockArgIterator, &it);
+    try std.testing.expectEqual(@as(?u8, 1), options.cd_number);
+}
+
+test "--cdaudio option" {
+    var mock_args = [_][:0]const u8{
+        "zenscripter",
+        "--cdaudio",
+    };
+    var mock_it = MockArgIterator.init(&mock_args);
+    var it = mock_it.arg_iterator();
+
+    const options = try parseCommandLineOptionsInner(MockArgIterator, &it);
+    try std.testing.expectEqual(true, options.cd_audio);
+}
