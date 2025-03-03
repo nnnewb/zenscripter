@@ -16,24 +16,24 @@ see also: [ONScripter](https://onscripter.osdn.jp/onscripter.html), [ONScripter-
 
 ### 开发库
 
-| 库            | 版本    | 平台   | 说明                               |
-| ------------- | ------- | ------ | ---------------------------------- |
-| SDL2          | 2.32.0  | 全平台 | <font color="red">**必须**</font>  |
-| SDL2_image    | 2.8.5   | 全平台 | <font color="red">**必须**</font>  |
-| SDL2_ttf      | 2.24.0  | 全平台 | <font color="red">**必须**</font>  |
-| SDL2_mixer    | 2.8.1   | 全平台 | <font color="red">**必须**</font>  |
-| bz2           | 1.0.8.0 | 全平台 | <font color="red">**必须**</font>  |
-| lua           | -       | -      | <font color="yellow">待支持</font> |
-| fontconfig    | -       | Linux  | <font color="yellow">待确认</font> |
-| smpeg2        | -       | -      | <font color="yellow">待支持</font> |
-| libjpeg       | -       | -      | <font color="yellow">待确认</font> |
-| libogg        | -       | -      | <font color="yellow">待确认</font> |
-| libvorbis-dev | -       | -      | <font color="yellow">待确认</font> |
+| 库            | 版本    | 平台   | 说明     |
+| ------------- | ------- | ------ | -------- |
+| SDL2          | 2.32.0  | 全平台 | **必须** |
+| SDL2_image    | 2.8.5   | 全平台 | **必须** |
+| SDL2_ttf      | 2.24.0  | 全平台 | **必须** |
+| SDL2_mixer    | 2.8.1   | 全平台 | **必须** |
+| bz2           | 1.0.8.0 | 全平台 | **必须** |
+| lua           | -       | -      | 待支持   |
+| fontconfig    | -       | Linux  | 待确认   |
+| smpeg2        | -       | -      | 待支持   |
+| libjpeg       | -       | -      | 待确认   |
+| libogg        | -       | -      | 待确认   |
+| libvorbis-dev | -       | -      | 待确认   |
 
 ### 构建
 
-| 平台    | 当前支持                        | 备注                            |
-| ------- | ------------------------------- | ------------------------------- |
-| Windows | <font color="yellow">WIP</font> | <font color="yellow">WIP</font> |
-| Linux   | <font color="yellow">WIP</font> | <font color="yellow">WIP</font> |
-| Android | <font color="yellow">WIP</font> | <font color="yellow">WIP</font> |
+| 平台    | 当前支持 | 备注 |
+| ------- | -------- | ---- |
+| Windows | WIP      | WIP  |
+| Linux   | WIP      | WIP  |
+| Android | WIP      | WIP  |
