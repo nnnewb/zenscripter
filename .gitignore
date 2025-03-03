@@ -8,3 +8,6 @@ nsadec
 onscripter
 sarconv
 sardec
+
+zig-out/
+.zig-cache/
