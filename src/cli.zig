@@ -35,7 +35,7 @@ pub fn parseCommandLineOptions(iter: *std.process.ArgIterator) !CommandLineOptio
         .skipFn = std.process.ArgIterator.skip,
         .deinitFn = std.process.ArgIterator.deinit,
     };
-    return parseCommandLineOptionsInner(&it);
+    return parseCommandLineOptionsInner(std.process.ArgIterator, &it);
 }
 
 fn ArgIterator(comptime T: type) type {
@@ -62,7 +62,7 @@ fn ArgIterator(comptime T: type) type {
     };
 }
 
-fn parseCommandLineOptionsInner(iter: *ArgIterator(std.process.ArgIterator)) !CommandLineOptions {
+fn parseCommandLineOptionsInner(comptime T: type, iter: *ArgIterator(T)) !CommandLineOptions {
     var options: CommandLineOptions = .{};
     while (iter.next()) |arg| {
         std.log.debug("arg {s}", .{arg});
@@ -186,18 +186,52 @@ fn parseCommandLineOptionsInner(iter: *ArgIterator(std.process.ArgIterator)) !Co
 }
 
 const MockArgIterator = struct {
-    args: [*]const []const u8,
+    args: []const [:0]const u8,
     current: usize,
 
-    fn init(args: [*]const []const u8) MockArgIterator {
+    fn init(args: []const [:0]const u8) MockArgIterator {
         return .{
             .args = args,
             .current = 0,
         };
     }
+
+    pub fn next(self: *MockArgIterator) ?[:0]const u8 {
+        if (self.current >= self.args.len) return null;
+        defer self.current += 1;
+        return self.args[self.current];
+    }
+
+    pub fn skip(self: *MockArgIterator) bool {
+        if (self.current >= self.args.len) {
+            return false;
+        }
+        defer self.current += 1;
+        return true;
+    }
+
+    pub fn deinit(self: *MockArgIterator) void {
+        _ = self;
+    }
+
+    pub fn arg_iterator(self: *MockArgIterator) ArgIterator(MockArgIterator) {
+        return .{
+            .inner = self,
+            .nextFn = MockArgIterator.next,
+            .skipFn = MockArgIterator.skip,
+            .deinitFn = MockArgIterator.deinit,
+        };
+    }
 };
 
-test "aaaa" {
-    const it = MockArgIterator.init(&[_][]const u8{"hello"});
-    _ = it;
+test "-HW option" {
+    var mock_args = [_][:0]const u8{
+        "zenscripter",
+        "-HW",
+    };
+    var mock_it = MockArgIterator.init(&mock_args);
+    var it = mock_it.arg_iterator();
+
+    const options = try parseCommandLineOptionsInner(MockArgIterator, &it);
+    try std.testing.expectEqual(.hardware, options.acceleration_mode);
 }
