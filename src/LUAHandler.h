@@ -29,46 +29,46 @@
 class ONScripter;
 class ScriptHandler;
 
-class LUAHandler{
+class LUAHandler {
 public:
-    enum { LUA_TAG,
-           LUA_TEXT0,
-           LUA_TEXT,
-           LUA_ANIMATION,
-           LUA_CLOSE,
-           LUA_END,
-           LUA_SAVEPOINT,
-           LUA_SAVE,
-           LUA_LOAD,
-           LUA_RESET,
-           MAX_CALLBACK
-    };
-           
-    LUAHandler();
-    ~LUAHandler();
+  enum {
+    LUA_TAG,
+    LUA_TEXT0,
+    LUA_TEXT,
+    LUA_ANIMATION,
+    LUA_CLOSE,
+    LUA_END,
+    LUA_SAVEPOINT,
+    LUA_SAVE,
+    LUA_LOAD,
+    LUA_RESET,
+    MAX_CALLBACK
+  };
 
-    void init(ONScripter *ons, ScriptHandler *sh, 
-              int screen_ratio1, int screen_ratio2);
-    void loadInitScript();
-    void addCallback(const char *label);
+  LUAHandler();
+  ~LUAHandler();
 
-    int  callFunction(bool is_callback, const char *cmd, void *data=NULL);
+  void init(ONScripter *ons, ScriptHandler *sh, int screen_ratio1, int screen_ratio2);
+  void loadInitScript();
+  void addCallback(const char *label);
 
-    bool isCallbackEnabled(int val);
+  int callFunction(bool is_callback, const char *cmd, void *data = NULL);
 
-    bool is_animatable;
-    int duration_time;
-    int next_time;
-    
-    //private:
-    ONScripter *ons;
-    lua_State *state;
-    ScriptHandler *sh;
-    int screen_ratio1, screen_ratio2;
+  bool isCallbackEnabled(int val);
 
-    char error_str[256];
-    
-    bool callback_state[MAX_CALLBACK];
+  bool is_animatable;
+  int duration_time;
+  int next_time;
+
+  // private:
+  ONScripter *ons;
+  lua_State *state;
+  ScriptHandler *sh;
+  int screen_ratio1, screen_ratio2;
+
+  char error_str[256];
+
+  bool callback_state[MAX_CALLBACK];
 };
 
 #endif // __LUA_HANDLER_H__
