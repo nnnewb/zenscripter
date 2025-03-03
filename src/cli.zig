@@ -26,6 +26,7 @@ pub const CommandLineOptions = struct {
     render_font_outline: bool = false,
     edit: bool = false,
     key_exe: ?[]const u8 = null,
+    font_cache: bool = false,
 };
 
 pub fn parseCommandLineOptions(iter: *std.process.ArgIterator) !CommandLineOptions {
@@ -180,6 +181,9 @@ fn parseCommandLineOptionsInner(comptime T: type, iter: *ArgIterator(T)) !Comman
             } else {
                 std.log.err("--key-exe option requires a value", .{});
             }
+        } else if (mem.eql(u8, arg, "--fontcache")) {
+            options.font_cache = true;
+            std.log.debug("enable font cache", .{});
         }
     }
     return options;
