@@ -227,11 +227,49 @@ const MockArgIterator = struct {
 test "-HW option" {
     var mock_args = [_][:0]const u8{
         "zenscripter",
-        "-HW",
+        "--HW",
     };
     var mock_it = MockArgIterator.init(&mock_args);
     var it = mock_it.arg_iterator();
 
     const options = try parseCommandLineOptionsInner(MockArgIterator, &it);
     try std.testing.expectEqual(.hardware, options.acceleration_mode);
+}
+
+test "-SW option" {
+    var mock_args = [_][:0]const u8{
+        "zenscripter",
+        "--SW",
+    };
+    var mock_it = MockArgIterator.init(&mock_args);
+    var it = mock_it.arg_iterator();
+
+    const options = try parseCommandLineOptionsInner(MockArgIterator, &it);
+    try std.testing.expectEqual(.software, options.acceleration_mode);
+}
+
+test "-H option" {
+    var mock_args = [_][:0]const u8{
+        "zenscripter",
+        "-H",
+        "1080",
+    };
+    var mock_it = MockArgIterator.init(&mock_args);
+    var it = mock_it.arg_iterator();
+
+    const options = try parseCommandLineOptionsInner(MockArgIterator, &it);
+    try std.testing.expectEqual(@as(u32, 1080), options.height);
+}
+
+test "-W option" {
+    var mock_args = [_][:0]const u8{
+        "zenscripter",
+        "-W",
+        "1920",
+    };
+    var mock_it = MockArgIterator.init(&mock_args);
+    var it = mock_it.arg_iterator();
+
+    const options = try parseCommandLineOptionsInner(MockArgIterator, &it);
+    try std.testing.expectEqual(@as(u32, 1920), options.width);
 }
