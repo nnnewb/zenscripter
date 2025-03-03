@@ -311,6 +311,7 @@ void parseOption(int argc, char *argv[]) {
   }
 }
 
+#ifdef USE_CPP_MAIN
 #if (defined(QWS) || defined(ANDROID)) && !SDL_VERSION_ATLEAST(2, 0, 0)
 int SDL_main(int argc, char **argv)
 #elif defined(PSP)
@@ -433,3 +434,4 @@ int main(int argc, char *argv[])
   ons.executeLabel();
   exit(0);
 }
+#endif // USE_CPP_MAIN

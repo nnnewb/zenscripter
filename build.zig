@@ -70,16 +70,22 @@ pub fn build(b: *std.Build) void {
         "src/ScriptParser.cpp",
         "src/ScriptParser_command.cpp",
     };
+
+    const optimize = b.standardOptimizeOption(.{
+        .preferred_optimize_mode = .Debug,
+    });
+    const target = b.standardTargetOptions(.{
+        .default_target = .{
+            .os_tag = .windows,
+            .cpu_arch = .x86_64,
+            .abi = .gnu,
+        },
+    });
     const exe = b.addExecutable(.{
         .name = "zenscripter",
-        .target = b.standardTargetOptions(.{
-            .default_target = .{
-                .os_tag = .windows,
-                .cpu_arch = .x86_64,
-                .abi = .gnu,
-            },
-        }),
-        .optimize = b.standardOptimizeOption(.{}),
+        .target = target,
+        .optimize = optimize,
+        .root_source_file = b.path("src/main.zig"),
     });
 
     exe.linkLibC();
@@ -130,4 +136,56 @@ pub fn build(b: *std.Build) void {
     b.installBinFile(bz2_binary_dir ++ "libbz2.dll", "libbz2.dll");
     b.installBinFile(iconv_binary_dir ++ "libiconv.dll", "libiconv.dll");
     b.installArtifact(exe);
+
+    unittest(b, target);
+}
+
+fn unittest(b: *std.Build, target: std.Build.ResolvedTarget) void {
+    const step = b.step("test", "run unittest for zenscripter");
+    const files = &[_][]const u8{
+        "src/DirtyRect.zig",
+        "src/cli.zig",
+    };
+    for (files) |filepath| {
+        const c = b.addTest(.{
+            .root_source_file = b.path(filepath),
+            .target = target,
+        });
+
+        c.linkLibC();
+        c.linkLibCpp();
+
+        c.addIncludePath(b.path(sdl2_include_dir));
+        c.addIncludePath(b.path(sdl2_image_include_dir));
+        c.addIncludePath(b.path(sdl2_ttf_include_dir));
+        c.addIncludePath(b.path(sdl2_mixer_include_dir));
+        c.addIncludePath(b.path(bz2_include_dir));
+        c.addIncludePath(b.path(iconv_include_dir));
+
+        c.addLibraryPath(b.path(sdl2_library_dir));
+        c.addLibraryPath(b.path(sdl2_image_library_dir));
+        c.addLibraryPath(b.path(sdl2_ttf_library_dir));
+        c.addLibraryPath(b.path(sdl2_mixer_library_dir));
+        c.addLibraryPath(b.path(bz2_library_dir));
+        c.addLibraryPath(b.path(iconv_library_dir));
+
+        c.linkSystemLibrary("SDL2.dll");
+        c.linkSystemLibrary("SDL2main");
+        c.linkSystemLibrary("SDL2_image.dll");
+        c.linkSystemLibrary("SDL2_ttf.dll");
+        c.linkSystemLibrary("SDL2_mixer.dll");
+        c.linkSystemLibrary("libbz2");
+        c.linkSystemLibrary("libiconv");
+
+        const r = b.addRunArtifact(c);
+
+        r.addPathDir(sdl2_binary_dir);
+        r.addPathDir(sdl2_image_binary_dir);
+        r.addPathDir(sdl2_ttf_binary_dir);
+        r.addPathDir(sdl2_mixer_binary_dir);
+        r.addPathDir(bz2_binary_dir);
+        r.addPathDir(iconv_binary_dir);
+
+        step.dependOn(&r.step);
+    }
 }
