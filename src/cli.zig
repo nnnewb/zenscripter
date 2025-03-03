@@ -302,3 +302,63 @@ test "--key-exe option" {
     const options = try parseCommandLineOptionsInner(MockArgIterator, &it);
     try std.testing.expectEqualStrings("keyfile.exe", options.key_exe.?);
 }
+
+test "--edit option" {
+    var mock_args = [_][:0]const u8{
+        "zenscripter",
+        "--edit",
+    };
+    var mock_it = MockArgIterator.init(&mock_args);
+    var it = mock_it.arg_iterator();
+
+    const options = try parseCommandLineOptionsInner(MockArgIterator, &it);
+    try std.testing.expectEqual(true, options.edit);
+}
+
+test "--render-font-outline option" {
+    var mock_args = [_][:0]const u8{
+        "zenscripter",
+        "--render-font-outline",
+    };
+    var mock_it = MockArgIterator.init(&mock_args);
+    var it = mock_it.arg_iterator();
+
+    const options = try parseCommandLineOptionsInner(MockArgIterator, &it);
+    try std.testing.expectEqual(true, options.render_font_outline);
+}
+
+test "--disable-rescale option" {
+    var mock_args = [_][:0]const u8{
+        "zenscripter",
+        "--disable-rescale",
+    };
+    var mock_it = MockArgIterator.init(&mock_args);
+    var it = mock_it.arg_iterator();
+
+    const options = try parseCommandLineOptionsInner(MockArgIterator, &it);
+    try std.testing.expectEqual(true, options.disable_rescale);
+}
+
+test "--enable-wheeldown-advance option" {
+    var mock_args = [_][:0]const u8{
+        "zenscripter",
+        "--enable-wheeldown-advance",
+    };
+    var mock_it = MockArgIterator.init(&mock_args);
+    var it = mock_it.arg_iterator();
+
+    const options = try parseCommandLineOptionsInner(MockArgIterator, &it);
+    try std.testing.expectEqual(true, options.enable_wheeldown_advance);
+}
+
+test "--force-button-shortcut option" {
+    var mock_args = [_][:0]const u8{
+        "zenscripter",
+        "--force-button-shortcut",
+    };
+    var mock_it = MockArgIterator.init(&mock_args);
+    var it = mock_it.arg_iterator();
+
+    const options = try parseCommandLineOptionsInner(MockArgIterator, &it);
+    try std.testing.expectEqual(true, options.force_button_shortcut);
+}
