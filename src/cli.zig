@@ -9,6 +9,8 @@ pub const AccelerateMode = enum(u8) {
 };
 
 pub const CommandLineOptions = struct {
+    show_help: bool = false,
+    show_version: bool = false,
     acceleration_mode: AccelerateMode = .hardware,
     width: u32 = 0,
     height: u32 = 0,
@@ -68,33 +70,12 @@ fn parseCommandLineOptionsInner(comptime T: type, iter: *ArgIterator(T)) !Comman
     while (iter.next()) |arg| {
         std.log.debug("arg {s}", .{arg});
 
-        const stdout = io.getStdOut().writer();
         if (mem.eql(u8, arg, "--help") or mem.eql(u8, arg, "-h")) {
-            _ = try stdout.write("Usage: onscripter [option ...]\n");
-            _ = try stdout.write("      --cdaudio\t\tuse CD audio if available\n");
-            _ = try stdout.write("      --cdnumber no\tchoose the CD-ROM drive number\n");
-            _ = try stdout.write("  -f, --font file\tset a TTF font file\n");
-            _ = try stdout.write("      --registry file\tset a registry file\n");
-            _ = try stdout.write("      --dll file\tset a dll file\n");
-            _ = try stdout.write("  -r, --root path\tset the root path to the archives\n");
-            _ = try stdout.write("      --fullscreen\tstart in fullscreen mode\n");
-            _ = try stdout.write("      --window\t\tstart in windowed mode\n");
-            _ = try stdout.write("      --force-button-shortcut\tignore useescspc and getenter command\n");
-            _ = try stdout.write("      --enable-wheeldown-advance\tadvance the text on mouse wheel down\n");
-            _ = try stdout.write("      --disable-rescale\tdo not rescale the images in the archives\n");
-            _ = try stdout.write("      --render-font-outline\trender the outline of a text instead of casting a shadow\n");
-            _ = try stdout.write("      --edit\t\tenable online modification of the volume and variables when 'z' is pressed\n");
-            _ = try stdout.write("      --key-exe file\tset a file (*.EXE) that includes a key table\n");
-            // _ = try stdout.write("      --enc:sjis\tuse sjis coding script\n");
-            // _ = try stdout.write("      --debug:1\t\tprint debug info\n");
-            _ = try stdout.write("      --fontcache\tcache default font\n");
-            _ = try stdout.write("  -SW, -HW\t\tuse software or hardware renderer (software renderer is used by default)\n");
-            _ = try stdout.write("  -W,-H\t\toverride window size provided by nscript manually\n");
-            _ = try stdout.write("  -h, --help\t\tshow this help and exit\n");
-            _ = try stdout.write("  -v, --version\t\tshow the version information and exit\n");
+            options.show_help = true;
+            std.log.debug("show help", .{});
         } else if (mem.eql(u8, arg, "-v") or mem.eql(u8, arg, "--version")) {
-            _ = try stdout.write("Written by Ogapee <ogapee@aqua.dti2.ne.jp>\n\n");
-            _ = try stdout.write("Copyright (c) 2001-2016 Ogapee.\n(C) 2014-2016 jh10001<jh10001@live.cn>\n");
+            options.show_version = true;
+            std.log.debug("show version", .{});
         } else if (mem.eql(u8, arg, "--HW")) {
             options.acceleration_mode = .hardware;
             std.log.debug("set acceleration mode: hardware", .{});
