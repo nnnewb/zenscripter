@@ -51,66 +51,63 @@ extern "C" FILE *fopen_ons(const char *str, const char *mode);
 #define RELATIVEPATHLENGTH 0
 #endif
 
-struct BaseReader
-{
-    enum {
-        NO_COMPRESSION   = 0,
-        SPB_COMPRESSION  = 1,
-        LZSS_COMPRESSION = 2,
-        NBZ_COMPRESSION  = 4
-    };
-    
-    enum {
-        ARCHIVE_TYPE_NONE = 0,
-        ARCHIVE_TYPE_SAR  = 1,
-        ARCHIVE_TYPE_NSA  = 2,
-        ARCHIVE_TYPE_NS2  = 4   //new format since NScr2.91, uses ext ".ns2"
-    };
+struct BaseReader {
+  enum { NO_COMPRESSION = 0, SPB_COMPRESSION = 1, LZSS_COMPRESSION = 2, NBZ_COMPRESSION = 4 };
 
-    struct FileInfo{
-        char name[256];
-        int  compression_type;
-        size_t offset;
-        size_t length;
-        size_t original_length;
-    };
+  enum {
+    ARCHIVE_TYPE_NONE = 0,
+    ARCHIVE_TYPE_SAR = 1,
+    ARCHIVE_TYPE_NSA = 2,
+    ARCHIVE_TYPE_NS2 = 4 // new format since NScr2.91, uses ext ".ns2"
+  };
 
-    struct ArchiveInfo{
-        ArchiveInfo *next;
-        FILE *file_handle;
-        int power_resume_number; // currently only for PSP
-        char *file_name;
-        FileInfo *fi_list;
-        unsigned int num_of_files;
-        unsigned long base_offset;
+  struct FileInfo {
+    char name[256];
+    int compression_type;
+    size_t offset;
+    size_t length;
+    size_t original_length;
+  };
 
-        ArchiveInfo(){
-            next = NULL;
-            file_handle = NULL;
-            power_resume_number = 0;
-            file_name = NULL;
-            fi_list = NULL;
-            num_of_files = 0;
-        }
-        ~ArchiveInfo(){
-            if (file_handle) fclose( file_handle );
-            if (file_name)   delete[] file_name;
-            if (fi_list)     delete[] fi_list;
-        }
-    };
+  struct ArchiveInfo {
+    ArchiveInfo *next;
+    FILE *file_handle;
+    int power_resume_number; // currently only for PSP
+    char *file_name;
+    FileInfo *fi_list;
+    unsigned int num_of_files;
+    unsigned long base_offset;
 
-    virtual ~BaseReader(){};
-    
-    virtual int open( const char *name=NULL ) = 0;
-    virtual int close() = 0;
-    
-    virtual const char *getArchiveName() const = 0;
-    virtual int  getNumFiles() = 0;
-    virtual void registerCompressionType( const char *ext, int type ) = 0;
+    ArchiveInfo() {
+      next = NULL;
+      file_handle = NULL;
+      power_resume_number = 0;
+      file_name = NULL;
+      fi_list = NULL;
+      num_of_files = 0;
+    }
+    ~ArchiveInfo() {
+      if (file_handle)
+        fclose(file_handle);
+      if (file_name)
+        delete[] file_name;
+      if (fi_list)
+        delete[] fi_list;
+    }
+  };
 
-    //virtual FileInfo getFileByIndex( unsigned int index ) = 0;
-    virtual size_t getFileLength( const char *file_name ) = 0;
-    virtual size_t getFile( const char *file_name, unsigned char *buffer, int *location=NULL ) = 0;
+  virtual ~BaseReader() {};
+
+  virtual int open(const char *name = NULL) = 0;
+  virtual int close() = 0;
+
+  virtual const char *getArchiveName() const = 0;
+  virtual int getNumFiles() = 0;
+  virtual void registerCompressionType(const char *ext, int type) = 0;
+
+  // virtual FileInfo getFileByIndex( unsigned int index ) = 0;
+  virtual size_t getFileLength(const char *file_name) = 0;
+  virtual size_t getFile(const char *file_name, unsigned char *buffer, int *location = NULL) = 0;
 };
 
 #endif // __BASE_READER_H__

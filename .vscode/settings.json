@@ -4,5 +4,4 @@
         "-DCMAKE_TOOLCHAIN_FILE=D:\\vcpkg\\scripts\\buildsystems\\vcpkg.cmake"
     ],
     "C_Cpp.formatting": "clangFormat",
-    "zig.zls.semanticTokens": "full",
 }
