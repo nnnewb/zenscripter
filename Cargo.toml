@@ -4,4 +4,5 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
+encoding = "0.2.33"
 sdl3 = { version = "0.14.15", features = ["build-from-source-static"] }
