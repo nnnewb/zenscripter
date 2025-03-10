@@ -8,3 +8,5 @@ nsadec
 onscripter
 sarconv
 sardec
+build/
+target/
