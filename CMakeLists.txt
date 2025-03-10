@@ -9,46 +9,46 @@ find_package(SDL2_mixer CONFIG REQUIRED)
 
 set(
     GUI_SOURCES
-    ONScripter.cpp
-	ONScripter_animation.cpp
-	ONScripter_command.cpp
-	ONScripter_effect.cpp
-	ONScripter_effect_breakup.cpp
-	ONScripter_event.cpp
-	ONScripter_file.cpp
-	ONScripter_file2.cpp
-	ONScripter_image.cpp
-	ONScripter_lut.cpp
-	ONScripter_rmenu.cpp
-	ONScripter_sound.cpp
-	ONScripter_text.cpp
-	AnimationInfo.cpp
-	FontInfo.cpp
-	DirtyRect.cpp
-	resize_image.cpp
-	ONScripter_directdraw.cpp
-	builtin_dll/layer_snow.cpp
-	builtin_dll/ONScripter_effect_cascade.cpp
-	builtin_dll/ONScripter_effect_trig.cpp
-	builtin_dll/layer_oldmovie.cpp
+    src/ONScripter.cpp
+	src/ONScripter_animation.cpp
+	src/ONScripter_command.cpp
+	src/ONScripter_effect.cpp
+	src/ONScripter_effect_breakup.cpp
+	src/ONScripter_event.cpp
+	src/ONScripter_file.cpp
+	src/ONScripter_file2.cpp
+	src/ONScripter_image.cpp
+	src/ONScripter_lut.cpp
+	src/ONScripter_rmenu.cpp
+	src/ONScripter_sound.cpp
+	src/ONScripter_text.cpp
+	src/AnimationInfo.cpp
+	src/FontInfo.cpp
+	src/DirtyRect.cpp
+	src/resize_image.cpp
+	src/ONScripter_directdraw.cpp
+	src/builtin_dll/layer_snow.cpp
+	src/builtin_dll/ONScripter_effect_cascade.cpp
+	src/builtin_dll/ONScripter_effect_trig.cpp
+	src/builtin_dll/layer_oldmovie.cpp
 )
 
 set(
     ZENSCRIPTER_SOURCES
     ${GUI_SOURCES}
 
-    coding2utf16.cpp
-	sjis2utf16.cpp
-	gbk2utf16.cpp
+    src/coding2utf16.cpp
+	src/sjis2utf16.cpp
+	src/gbk2utf16.cpp
 
-	DirectReader.cpp
-	SarReader.cpp
-	NsaReader.cpp
+	src/DirectReader.cpp
+	src/SarReader.cpp
+	src/NsaReader.cpp
 
-	onscripter_main.cpp
-	ScriptHandler.cpp
-	ScriptParser.cpp
-	ScriptParser_command.cpp
+	src/ScriptHandler.cpp
+	src/ScriptParser.cpp
+	src/ScriptParser_command.cpp
+	src/onscripter_main.cpp
 )
 add_executable(zenscripter ${ZENSCRIPTER_SOURCES})
 target_link_libraries(
