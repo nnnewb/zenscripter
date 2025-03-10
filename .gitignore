@@ -1,10 +1,1 @@
-.DS_Store
-.vscode/
-*.o
-*.obj
-*.exe
-nsaconv
-nsadec
-onscripter
-sarconv
-sardec
+/target

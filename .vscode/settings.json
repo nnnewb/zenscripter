@@ -1,0 +1,4 @@
+{
+    "C_Cpp.formatting": "clangFormat",
+    "zig.zls.semanticTokens": "full",
+}
