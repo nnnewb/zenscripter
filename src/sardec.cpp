@@ -36,7 +36,10 @@
 inline int mkdir(const char *pathname, int unused) { return _mkdir(pathname); }
 #endif
 
+#ifndef errno
 extern int errno;
+#endif
+
 Coding2UTF16 *coding2utf16 = new SJIS2UTF16();
 
 int main(int argc, char **argv) {
