@@ -8,3 +8,5 @@ nscriptdecode
 *.o
 *.exe
 *.obj
+build/
+.zig-cache/

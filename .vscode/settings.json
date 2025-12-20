@@ -1,5 +1,5 @@
 {
-    "files.encoding": "shiftjis",
+    "cmake.generator": "Ninja",
     "files.exclude": {
         "*.o": true
     }
