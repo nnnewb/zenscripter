@@ -1,0 +1,31 @@
+{
+    "configurations": [
+        {
+            "name": "Win32",
+            "includePath": [
+                "${workspaceFolder}/**"
+            ],
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE",
+                "_CONSOLE",
+                "_CRT_SECURE_NO_WARNINGS",
+                "USE_CDROM",
+                "USE_LUA",
+                "USE_OGG_VORBIS",
+                "UTF8_CAPTION"
+            ],
+            "windowsSdkVersion": "10.0.26100.0",
+            "compilerPath": "cl.exe",
+            "cStandard": "c17",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "windows-msvc-x64",
+            "configurationProvider": "ms-vscode.cmake-tools",
+            "compileCommands": [
+                "./build/compile_commands.json"
+            ]
+        }
+    ],
+    "version": 4
+}

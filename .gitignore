@@ -1,10 +1,3 @@
-nsaconv
-nsadec
-onscripter
-sarconv
-sardec
-simple_aviplay
-nscriptdecode
+.zig-cache/
+zig-out/
 *.o
-*.exe
-*.obj
