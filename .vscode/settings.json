@@ -1,5 +1,25 @@
 {
-    "files.encoding": "shiftjis",
+    "go.formatTool": "gofumpt",
+    "go.formatFlags": [
+        "-modpath",
+        "github.com/nnnewb/zenscripter"
+    ],
+    "[cpp]": {
+        "editor.wordBasedSuggestions": "off",
+        "editor.semanticHighlighting.enabled": true,
+        "editor.stickyScroll.defaultModel": "foldingProviderModel",
+        "editor.suggest.insertMode": "replace",
+        "files.encoding": "shiftjis",
+    },
+    "[go]": {
+        "editor.insertSpaces": false,
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": "explicit"
+        },
+        "files.encoding": "utf8",
+        "files.eol": "\n",
+    },
     "files.exclude": {
         "*.o": true
     }
